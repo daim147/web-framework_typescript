@@ -1,17 +1,10 @@
 import { User } from './models/User';
-// const user = new User({});
-// user.set({ name: 'Husnain' });
-// console.log(user.data);
+const user = new User({ name: 'Husnain', age: 23 });
 
-// user.save();
-// user.on('change', () => {
-//   console.log('change 1');
-// });
-// user.on('change', () => {
-//   console.log('change 2');
-// });
-// user.on('delete', () => {
-//   console.log('delete 1');
-// });
+// console.log(user.get('name'));
 
-// user.trigger('change');
+user.on('Click', () => console.log('TRIGGERS'));
+user.on('Click', () => console.log('TRIGGERS'));
+user.on('Click', () => console.log(user.events));
+console.log(user);
+user.trigger('Click');

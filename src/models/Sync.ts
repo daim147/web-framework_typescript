@@ -4,7 +4,7 @@ interface HasId {
 }
 export class Sync<T extends HasId> {
   constructor(public api: AxiosInstance) {}
-  async save(info: T): Promise<AxiosPromise> {
+  save = async (info: T): Promise<AxiosPromise> => {
     const { id } = info;
     const data: AxiosResponse = await this.api({
       method: 'post',
@@ -12,12 +12,12 @@ export class Sync<T extends HasId> {
       data: info,
     });
     return data.data;
-  }
-  async fetch(id: number): Promise<AxiosPromise> {
+  };
+  fetch = async (id: number): Promise<AxiosPromise> => {
     const data: AxiosResponse = await this.api({
       url: `/${id}`,
       method: 'get',
     });
     return data.data;
-  }
+  };
 }
