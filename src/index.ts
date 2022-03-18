@@ -1,5 +1,4 @@
 import { User } from './models/User';
-
 console.log('Hello');
 const user = new User({ name: 'Husnain', age: 20 });
 
@@ -13,4 +12,7 @@ user.on('change', () => {
 user.on('delete', () => {
   console.log('delete 1');
 });
+
 user.trigger('change');
+
+console.log(user.save());

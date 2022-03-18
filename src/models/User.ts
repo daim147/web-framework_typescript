@@ -1,3 +1,4 @@
+import axios from 'axios';
 interface UserData {
   name?: string;
   age?: number;
@@ -25,5 +26,10 @@ export class User {
       handlers.forEach((callBack: Callback): void => {
         callBack();
       });
+  }
+
+  async save(): Promise<void> {
+    const data = await axios.post('http://localhost:3000/users', this.data);
+    console.log(data, 'data');
   }
 }
