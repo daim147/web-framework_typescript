@@ -2563,6 +2563,12 @@ var age = att.get('age');
 },{}],"src/models/Model.ts":[function(require,module,exports) {
 "use strict";
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function (resolve) {
@@ -2595,126 +2601,15 @@ var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, gene
   });
 };
 
-var __generator = this && this.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function sent() {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) {
-      try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-        if (y = 0, t) op = [op[0] & 2, t.value];
-
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-
-          case 4:
-            _.label++;
-            return {
-              value: op[1],
-              done: false
-            };
-
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-
-          case 7:
-            op = _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-
-              _.ops.push(op);
-
-              break;
-            }
-
-            if (t[2]) _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-        }
-
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Model = void 0;
 
-var Model =
-/** @class */
-function () {
+var Model = /*#__PURE__*/function () {
   function Model(attributes, events, sync) {
+    _classCallCheck(this, Model);
+
     this.attributes = attributes;
     this.events = events;
     this.sync = sync; //!when modifiers is used in constructor like above those properties are executed first so we can write our getter like
@@ -2727,79 +2622,194 @@ function () {
   //   }
 
 
-  Model.prototype.set = function (update) {
-    this.attributes.set(update);
-    this.trigger('change');
-  };
+  _createClass(Model, [{
+    key: "set",
+    value: function set(update) {
+      this.attributes.set(update);
+      this.trigger('change');
+    }
+  }, {
+    key: "fetch",
+    value: function fetch() {
+      return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var id, data;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                id = this.get('id');
 
-  Model.prototype.fetch = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      var id, data;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            id = this.get('id');
+                if (id) {
+                  _context.next = 3;
+                  break;
+                }
 
-            if (!id) {
-              throw new Error('Cannot Fetch without user id');
+                throw new Error('Cannot Fetch without id');
+
+              case 3:
+                _context.next = 5;
+                return this.sync.fetch(id);
+
+              case 5:
+                data = _context.sent;
+                this.set(data);
+                return _context.abrupt("return", data);
+
+              case 8:
+              case "end":
+                return _context.stop();
             }
+          }
+        }, _callee, this);
+      }));
+    }
+  }, {
+    key: "save",
+    value: function save() {
+      return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var allData, data;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                allData = this.attributes.getAll();
+                _context2.next = 4;
+                return this.sync.save(allData);
 
-            return [4
-            /*yield*/
-            , this.sync.fetch(id)];
+              case 4:
+                data = _context2.sent;
+                this.trigger('save');
+                return _context2.abrupt("return", data);
 
-          case 1:
-            data = _a.sent();
-            this.set(data);
-            return [2
-            /*return*/
-            , data];
-        }
-      });
-    });
-  };
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](0);
+                this.trigger('error');
 
-  Model.prototype.save = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      var userData, data, e_1;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            _a.trys.push([0, 2,, 3]);
-
-            userData = this.attributes.getAll();
-            return [4
-            /*yield*/
-            , this.sync.save(userData)];
-
-          case 1:
-            data = _a.sent();
-            this.trigger('save');
-            return [2
-            /*return*/
-            , data];
-
-          case 2:
-            e_1 = _a.sent();
-            this.trigger('error');
-            return [3
-            /*break*/
-            , 3];
-
-          case 3:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 9]]);
+      }));
+    }
+  }]);
 
   return Model;
 }();
 
 exports.Model = Model;
-},{}],"src/models/User.ts":[function(require,module,exports) {
+},{}],"src/models/Collection.ts":[function(require,module,exports) {
+"use strict";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Collection = void 0;
+
+var Events_1 = require("./Events");
+
+var Collection = /*#__PURE__*/function () {
+  function Collection(api, deserialize) {
+    _classCallCheck(this, Collection);
+
+    this.api = api;
+    this.deserialize = deserialize;
+    this.model = [];
+    this.events = new Events_1.Events();
+  }
+
+  _createClass(Collection, [{
+    key: "on",
+    get: function get() {
+      return this.events.on;
+    }
+  }, {
+    key: "trigger",
+    get: function get() {
+      return this.events.trigger;
+    }
+  }, {
+    key: "fetch",
+    value: function fetch() {
+      return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this = this;
+
+        var response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.api({
+                  method: 'get'
+                });
+
+              case 2:
+                response = _context.sent;
+                response.data.forEach(function (item) {
+                  var user = _this.deserialize(item);
+
+                  _this.model.push(user);
+                });
+                this.trigger('change');
+                return _context.abrupt("return", response.data);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+    }
+  }]);
+
+  return Collection;
+}();
+
+exports.Collection = Collection;
+},{"./Events":"src/models/Events.ts"}],"src/models/User.ts":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -2845,237 +2855,369 @@ var Attributes_1 = require("./Attributes");
 
 var Model_1 = require("./Model");
 
+var Collection_1 = require("./Collection");
+
 var User =
 /** @class */
 function (_super) {
   __extends(User, _super);
 
   function User() {
-    return _super !== null && _super.apply(this, arguments) || this;
+    var _this = _super !== null && _super.apply(this, arguments) || this;
+
+    _this.getRandomAge = function () {
+      var age = Math.round(Math.random() * 100);
+
+      _this.set({
+        age: age
+      });
+    };
+
+    return _this;
   }
 
   User.build = function (attr) {
     return new User(new Attributes_1.Attributes(attr), new Events_1.Events(), new Sync_1.Sync(axios_1.users));
   };
 
+  User.buildCollection = function () {
+    //! Type inference work quite well in both function return also
+    // return new Collection<UserData, User>(users, User.build);
+    return new Collection_1.Collection(axios_1.users, User.build);
+  };
+
   return User;
 }(Model_1.Model);
 
 exports.User = User;
-},{"../axios":"src/axios.ts","./Events":"src/models/Events.ts","./Sync":"src/models/Sync.ts","./Attributes":"src/models/Attributes.ts","./Model":"src/models/Model.ts"}],"src/models/Collection.ts":[function(require,module,exports) {
+},{"../axios":"src/axios.ts","./Events":"src/models/Events.ts","./Sync":"src/models/Sync.ts","./Attributes":"src/models/Attributes.ts","./Model":"src/models/Model.ts","./Collection":"src/models/Collection.ts"}],"src/view/View.ts":[function(require,module,exports) {
 "use strict";
 
-var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function (resolve) {
-      resolve(value);
-    });
-  }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-var __generator = this && this.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function sent() {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    while (_) {
-      try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-        if (y = 0, t) op = [op[0] & 2, t.value];
-
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-
-          case 4:
-            _.label++;
-            return {
-              value: op[1],
-              done: false
-            };
-
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-
-          case 7:
-            op = _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-
-              _.ops.push(op);
-
-              break;
-            }
-
-            if (t[2]) _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-        }
-
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Collection = void 0;
+exports.View = void 0;
 
-var Events_1 = require("./Events");
+var View = /*#__PURE__*/function () {
+  function View(parent, model) {
+    var _this = this;
 
-var Collection =
-/** @class */
-function () {
-  function Collection(api, build) {
-    this.api = api;
-    this.build = build;
-    this.model = [];
-    this.events = new Events_1.Events();
+    _classCallCheck(this, View);
+
+    this.parent = parent;
+    this.model = model;
+    this.regions = {};
+
+    this.bindModel = function () {
+      _this.model.on('change', function () {
+        _this.render();
+
+        console.log(_this.parent);
+      });
+    };
+
+    this.render = function () {
+      console.log(_this.parent);
+      _this.parent.innerHTML = '';
+      var template = document.createElement('template');
+      template.innerHTML = _this.template();
+
+      _this.bindEvents(template.content);
+
+      _this.mapRegions(template.content);
+
+      _this.onRender();
+
+      _this.parent.appendChild(template.content);
+    };
+
+    this.bindModel();
   }
 
-  Object.defineProperty(Collection.prototype, "on", {
-    get: function get() {
-      return this.events.on;
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Collection.prototype, "trigger", {
-    get: function get() {
-      return this.events.trigger;
-    },
-    enumerable: false,
-    configurable: true
-  });
+  _createClass(View, [{
+    key: "regionsMap",
+    value: function regionsMap() {
+      return {};
+    }
+  }, {
+    key: "eventMaps",
+    value: function eventMaps() {
+      return {};
+    }
+  }, {
+    key: "bindEvents",
+    value: function bindEvents(fragment) {
+      var events = this.eventMaps();
 
-  Collection.prototype.fetch = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      var response;
+      var _loop = function _loop(event) {
+        var _event$split$map = event.split(':').map(function (str) {
+          return str.trim();
+        }),
+            _event$split$map2 = _slicedToArray(_event$split$map, 2),
+            eventName = _event$split$map2[0],
+            eventTarget = _event$split$map2[1];
 
-      var _this = this;
+        fragment.querySelectorAll(eventTarget).forEach(function (element) {
+          element.addEventListener(eventName, events[event]);
+        });
+      };
 
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , this.api({
-              method: 'get'
-            })];
+      for (var event in events) {
+        _loop(event);
+      }
+    }
+  }, {
+    key: "mapRegions",
+    value: function mapRegions(fragment) {
+      var regionsMap = this.regionsMap();
 
-          case 1:
-            response = _a.sent();
-            response.data.forEach(function (item) {
-              var user = _this.build(item);
+      for (var key in regionsMap) {
+        var selector = regionsMap[key];
+        var element = fragment.querySelector(selector);
 
-              _this.model.push(user);
-            });
-            this.trigger('change');
-            return [2
-            /*return*/
-            , response.data];
+        if (element) {
+          this.regions[key] = element;
         }
-      });
-    });
-  };
+      }
+    }
+  }, {
+    key: "onRender",
+    value: function onRender() {}
+  }]);
 
-  return Collection;
+  return View;
 }();
 
-exports.Collection = Collection;
-},{"./Events":"src/models/Events.ts"}],"src/index.ts":[function(require,module,exports) {
+exports.View = View;
+},{}],"src/view/UserForm.ts":[function(require,module,exports) {
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UserForm = void 0;
+
+var View_1 = require("./View");
+
+var UserForm = /*#__PURE__*/function (_View_1$View) {
+  _inherits(UserForm, _View_1$View);
+
+  var _super = _createSuper(UserForm);
+
+  function UserForm() {
+    var _this;
+
+    _classCallCheck(this, UserForm);
+
+    _this = _super.apply(this, arguments);
+
+    _this.onSetName = function () {
+      var input = _this.parent.querySelector('.setNameInput');
+
+      _this.model.set({
+        name: input.value
+      });
+    };
+
+    return _this;
+  }
+
+  _createClass(UserForm, [{
+    key: "eventMaps",
+    value: function eventMaps() {
+      return {
+        'click:.randomAge': this.model.getRandomAge,
+        'click:.setName': this.onSetName
+      };
+    }
+  }, {
+    key: "buttonClick",
+    value: function buttonClick(e) {
+      console.log(e);
+    }
+  }, {
+    key: "inputChange",
+    value: function inputChange(e) {
+      console.log(e);
+    }
+  }, {
+    key: "template",
+    value: function template() {
+      return "\n        <div>\n        <h1>User Form</h1>\n\n        <input class = 'setNameInput' placeholder = '".concat(this.model.get('name'), "' />\n        <button class = 'setName'>Set Name</button>\n        <button class = 'randomAge'>Random Age</button>\n        </div>\n        ");
+    }
+  }]);
+
+  return UserForm;
+}(View_1.View);
+
+exports.UserForm = UserForm;
+},{"./View":"src/view/View.ts"}],"src/view/UserShow.ts":[function(require,module,exports) {
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UserShow = void 0;
+
+var View_1 = require("./View");
+
+var UserShow = /*#__PURE__*/function (_View_1$View) {
+  _inherits(UserShow, _View_1$View);
+
+  var _super = _createSuper(UserShow);
+
+  function UserShow() {
+    _classCallCheck(this, UserShow);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(UserShow, [{
+    key: "template",
+    value: function template() {
+      return "\n        <div>\n        <h1>User Details</h1>\n        <h2>User Name: ".concat(this.model.get('name'), "</h2>\n        <h2>User Age: ").concat(this.model.get('age'), "</h2>\n        </div>\n        ");
+    }
+  }]);
+
+  return UserShow;
+}(View_1.View);
+
+exports.UserShow = UserShow;
+},{"./View":"src/view/View.ts"}],"src/view/UserEdit.ts":[function(require,module,exports) {
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UserEdit = void 0;
+
+var UserForm_1 = require("./UserForm");
+
+var UserShow_1 = require("./UserShow");
+
+var View_1 = require("./View");
+
+var UserEdit = /*#__PURE__*/function (_View_1$View) {
+  _inherits(UserEdit, _View_1$View);
+
+  var _super = _createSuper(UserEdit);
+
+  function UserEdit() {
+    _classCallCheck(this, UserEdit);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(UserEdit, [{
+    key: "regionsMap",
+    value: function regionsMap() {
+      return {
+        userShow: '.user-show',
+        userForm: '.user-form'
+      };
+    }
+  }, {
+    key: "onRender",
+    value: function onRender() {
+      new UserShow_1.UserShow(this.regions.userShow, this.model).render();
+      new UserForm_1.UserForm(this.regions.userForm, this.model).render();
+    }
+  }, {
+    key: "template",
+    value: function template() {
+      return "\n        <div>\n        <div class = 'user-show'></div>\n        <div class = 'user-form'></div>\n        </div>\n        ";
+    }
+  }]);
+
+  return UserEdit;
+}(View_1.View);
+
+exports.UserEdit = UserEdit;
+},{"./UserForm":"src/view/UserForm.ts","./UserShow":"src/view/UserShow.ts","./View":"src/view/View.ts"}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3084,23 +3226,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var User_1 = require("./models/User");
 
-var Collection_1 = require("./models/Collection");
-
-var axios_1 = require("./axios");
+var UserEdit_1 = require("./view/UserEdit");
 
 var user = User_1.User.build({
-  name: 'husnain'
+  name: 'Mohsin',
+  age: 23
 });
-var collection = new Collection_1.Collection(axios_1.users, User_1.User.build);
-collection.fetch().then(function (data) {
-  return console.log(data);
-}); // user.save();
-// user.on('change', () => {
-//   console.log('User was change');
-// });
-// user.set({ age: 342 });
-// user.fetch();
-},{"./models/User":"src/models/User.ts","./models/Collection":"src/models/Collection.ts","./axios":"src/axios.ts"}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var root = document.getElementById('root');
+
+if (root) {
+  var userForm = new UserEdit_1.UserEdit(root, user);
+  userForm.render();
+}
+},{"./models/User":"src/models/User.ts","./view/UserEdit":"src/view/UserEdit.ts"}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -3128,7 +3266,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63126" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61763" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

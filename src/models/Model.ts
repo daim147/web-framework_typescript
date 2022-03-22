@@ -36,7 +36,7 @@ export class Model<T extends HasId> {
   async fetch(): Promise<T> {
     const id = this.get('id');
     if (!id) {
-      throw new Error('Cannot Fetch without user id');
+      throw new Error('Cannot Fetch without id');
     }
     const data = await this.sync.fetch(id);
     this.set(data);
@@ -44,10 +44,10 @@ export class Model<T extends HasId> {
     return data;
   }
 
-  async save(): Promise<T> {
+  async save(): Promise<T | void> {
     try {
-      const userData = this.attributes.getAll();
-      const data = await this.sync.save(userData);
+      const allData = this.attributes.getAll();
+      const data = await this.sync.save(allData);
       this.trigger('save');
       return data;
     } catch (e) {
