@@ -13,6 +13,10 @@ export class Attributes<T> {
   set = (data: T): void => {
     Object.assign(this.data, data);
   };
+
+  getAll(): T {
+    return this.data;
+  }
 }
 //! if no generic is passes whatever the argument will pass typescript will make type from it
 // const att = new Attributes({ name: 'husnain', age: 23 });
