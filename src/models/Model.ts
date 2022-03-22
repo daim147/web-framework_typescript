@@ -20,15 +20,15 @@ export class Model<T extends HasId> {
     private events: Events,
     private sync: Sync<T>
   ) {}
-  get get() {
-    return this.attributes.get;
-  }
-  get on() {
-    return this.events.on;
-  }
-  get trigger() {
-    return this.events.trigger;
-  }
+  //!when modifiers is used in constructor like above those properties are executed first so we can write our getter like
+  get = this.attributes.get;
+  on = this.events.on;
+  trigger = this.events.trigger;
+
+  //   get get() {
+  //     return this.attributes.get;
+  //   }
+
   set(update: T): void {
     this.attributes.set(update);
     this.trigger('change');
