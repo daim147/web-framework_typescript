@@ -1,2 +1,2 @@
 # web-framework_typescript
-# Funcionality Similar to Bakbone.js and Marionette.js
+# Functionality Similar to Bakbone.js and Marionette.js
